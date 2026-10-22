@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HHHHHHHANA - 插画作品集</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { margin-bottom: 5px; font-weight: 500; letter-spacing: 2px;}
+        p.subtitle { color: #888; margin-bottom: 40px; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            transition: opacity 0.3s;
+        }
+        .card img:hover { opacity: 0.8; }
+        .contact {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            text-align: center;
+            width: 100%;
+            max-width: 1000px;
+        }
+        .contact a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>HHHHHHHANA</h1>
+    <p class="subtitle">插画师 / 商业合作 / 角色设计</p>
+
+    <!-- 这里是你放作品的地方 -->
+    <div class="grid">
+        <div class="card">
+            <!-- 图片路径，先用两张网图占位，等下教你怎么换 -->
+            <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=1000" alt="作品1">
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1000" alt="作品2">
+        </div>
+    </div>
+
+    <!-- 联系合作部分 -->
+    <div class="contact">
+        <p>商业合作及项目询价，请联系：</p>
+        <p>邮箱：<a href="mailto:你的邮箱@example.com">你的邮箱@example.com</a></p>
+    </div>
+
+</body>
+</html>
