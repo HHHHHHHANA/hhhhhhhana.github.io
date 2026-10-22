@@ -1,73 +1,731 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HHHHHHHANA - 插画作品集</title>
-    <style>
-        body {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        h1 { margin-bottom: 5px; font-weight: 500; letter-spacing: 2px;}
-        p.subtitle { color: #888; margin-bottom: 40px; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            width: 100%;
-            max-width: 1000px;
-        }
-        .card img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            display: block;
-            transition: opacity 0.3s;
-        }
-        .card img:hover { opacity: 0.8; }
-        .contact {
-            margin-top: 60px;
-            padding-top: 20px;
-            border-top: 1px solid #333;
-            text-align: center;
-            width: 100%;
-            max-width: 1000px;
-        }
-        .contact a {
-            color: #4CAF50;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人插画与视觉设计作品集 | Portfolio</title>
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --card-bg: #18181d;
+      --card-border: #2a2a32;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent: #e11d48;
+      --accent-soft: rgba(225, 29, 72, 0.15);
+      --tag-bg: #26262f;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    /* 顶部使用提示条（仅供本地调试，上线可删） */
+    .helper-bar {
+      background: linear-gradient(90deg, #1e1b4b, #31102f);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 10px 24px;
+      font-size: 13px;
+      color: #e0e7ff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .helper-bar span strong { color: #fda4af; }
+    .helper-btn {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .helper-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* 头部 Hero 区 */
+    header {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 64px 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 32px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .brand h1 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff 0%, #fda4af 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand .subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-top: 8px;
+      max-width: 600px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-top: 16px;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--text-main);
+    }
+    .btn:hover {
+      border-color: #52525b;
+      transform: translateY(-2px);
+    }
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #be123c;
+      border-color: #be123c;
+    }
+
+    /* 分类导航栏 */
+    .nav-container {
+      max-width: 1240px;
+      margin: 32px auto 28px;
+      padding: 0 24px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .filter-tab {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+      background: var(--card-bg);
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-tab:hover {
+      color: var(--text-main);
+      border-color: #3f3f46;
+    }
+    .filter-tab.active {
+      background: var(--text-main);
+      color: var(--bg);
+      border-color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* 作品网格 */
+    .gallery {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 28px;
+    }
+    @media (max-width: 640px) {
+      .gallery { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: #52525b;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.4);
+    }
+
+    /* 视觉封面区域 */
+    .card-cover {
+      width: 100%;
+      height: 250px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .card:hover .card-cover img {
+      transform: scale(1.04);
+    }
+
+    /* 定制主题视觉占位背景（未放本地图时直接展示美观效果） */
+    .art-placeholder {
+      width: 100%;
+      height: 100%;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .art-placeholder::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.12), transparent 60%);
+      pointer-events: none;
+    }
+    .art-watermark {
+      font-size: 42px;
+      font-weight: 900;
+      opacity: 0.18;
+      letter-spacing: 2px;
+      align-self: flex-end;
+      font-family: Georgia, serif;
+    }
+    .art-preview-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.85);
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(4px);
+      padding: 6px 12px;
+      border-radius: 6px;
+      width: fit-content;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    /* 快速换图按钮 */
+    .replace-img-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 5;
+    }
+    .card:hover .replace-img-btn { opacity: 1; }
+    .replace-img-btn:hover { background: var(--accent); border-color: var(--accent); }
+
+    /* 卡片信息区 */
+    .card-body {
+      padding: 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .category-badge {
+      font-size: 12px;
+      font-weight: 600;
+      color: #fda4af;
+      background: var(--accent-soft);
+      padding: 3px 10px;
+      border-radius: 6px;
+    }
+    .file-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+    .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: auto;
+    }
+    .tag {
+      font-size: 12px;
+      background: var(--tag-bg);
+      color: #d1d5db;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    /* 详情弹窗 Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding: 24px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-content {
+      background: #18181d;
+      border: 1px solid #2e2e38;
+      border-radius: 16px;
+      max-width: 860px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 32px;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #27272a;
+      border: none;
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .modal-preview-box {
+      width: 100%;
+      min-height: 320px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      border: 1px solid #2e2e38;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #09090b;
+    }
+    .modal-preview-box img {
+      max-width: 100%;
+      max-height: 520px;
+      object-fit: contain;
+    }
+    .modal-details h2 { font-size: 24px; margin-bottom: 10px; }
+    .modal-details p { color: #d1d5db; font-size: 15px; margin-bottom: 16px; }
+    .modal-checklist {
+      background: #121216;
+      border: 1px solid #27272a;
+      padding: 16px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #9ca3af;
+    }
+    .modal-checklist li { margin-left: 18px; margin-bottom: 6px; }
+  </style>
 </head>
 <body>
 
-    <h1>HHHHHHHANA</h1>
-    <p class="subtitle">插画师 / 商业合作 / 角色设计</p>
+  <!-- 顶部实时换图引导栏 -->
+  <div class="helper-bar" id="helperBar">
+    <span>💡 <strong>本地预览模式：</strong>已根据你的《作品集.pdf》生成全部 11 个项目卡片。将鼠标移到任意卡片右上角点击 <strong>「替换本地图片」</strong> 即可直接选图看效果！</span>
+    <button class="helper-btn" onclick="document.getElementById('helperBar').style.display='none'">隐藏提示</button>
+  </div>
 
-    <!-- 这里是你放作品的地方 -->
-    <div class="grid">
-        <div class="card">
-            <!-- 图片路径，先用两张网图占位，等下教你怎么换 -->
-            <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=1000" alt="作品1">
-        </div>
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1000" alt="作品2">
-        </div>
+  <!-- 个人信息头部 -->
+  <header>
+    <div class="brand">
+      <h1>MY DESIGN PORTFOLIO</h1>
+      <p class="subtitle">专注于角色原画、游戏场景概念设计、商业插画与书封绘制，兼具游戏/应用 UI 界面与交互视觉落地能力。</p>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        当前状态：寻找美术/插画实习 · 承接商业插画与原画委托
+      </div>
     </div>
-
-    <!-- 联系合作部分 -->
-    <div class="contact">
-        <p>商业合作及项目询价，请联系：</p>
-        <p>邮箱：<a href="mailto:你的邮箱@example.com">你的邮箱@example.com</a></p>
+    <div class="header-actions">
+      <a href="mailto:yourname@example.com" class="btn btn-primary">📩 联系合作 / 投递邀约</a>
+      <a href="./作品集.pdf" target="_blank" class="btn">📄 查看完整作品集 (PDF)</a>
     </div>
+  </header>
 
+  <!-- 五大板块分类过滤（严格对应作品集目录） -->
+  <nav class="nav-container" id="filterNav">
+    <button class="filter-tab active" data-filter="all">全部作品 (11)</button>
+    <button class="filter-tab" data-filter="project">项目作品 (3)</button>
+    <button class="filter-tab" data-filter="original">原画作品 (2)</button>
+    <button class="filter-tab" data-filter="fanart">同人制品 (2)</button>
+    <button class="filter-tab" data-filter="commission">商业稿件 (2)</button>
+    <button class="filter-tab" data-filter="ui">UI 作品及其他 (2)</button>
+  </nav>
+
+  <!-- 作品展示网格 -->
+  <main class="gallery" id="portfolioGrid"></main>
+
+  <!-- 作品详情弹窗 -->
+  <div class="modal-backdrop" id="projectModal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div class="modal-preview-box" id="modalImageContainer"></div>
+      <div class="modal-details">
+        <span class="category-badge" id="modalCategory"></span>
+        <h2 id="modalTitle" style="margin-top:8px;"></h2>
+        <p id="modalDesc"></p>
+        <div class="modal-checklist">
+          <strong style="color:#fff;display:block;margin-bottom:8px;">📌 作品集包含细项（对应 PDF 内容）：</strong>
+          <ul id="modalBullets"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 隐藏的文件选择器，用于本地快速换图测试 -->
+  <input type="file" id="imageInput" accept="image/*" style="display:none">
+
+  <script>
+    // 根据你上传的《作品集.pdf》完整整理的11组项目数据
+    const portfolioItems = [
+      {
+        id: "zhuhou",
+        category: "project",
+        categoryName: "项目作品 · 游戏美术",
+        title: "1. 《诸侯》古风策略游戏美术",
+        desc: "负责修改完善 AI 立绘、游戏内大部分 UI 组件设计以及所有朝堂场景与结局结算界面。",
+        bullets: [
+          "多套古风文臣/策士角色立绘精修与服饰纹理完善（灰袍、黄袍、白衣朱领等）",
+          "水墨青铜纹样主视觉《诸侯》标题界面设计",
+          "朝堂主场景、百家/国策/任务列表 UI 及“哀·执政8年”结局结算界面"
+        ],
+        tags: ["角色立绘精修", "古风场景", "游戏UI", "结算界面"],
+        localPath: "images/zhuhou.jpg",
+        gradient: "linear-gradient(135deg, #3b1318 0%, #682825 55%, #1c1917 100%)",
+        watermark: "諸侯"
+      },
+      {
+        id: "luna",
+        category: "project",
+        categoryName: "项目作品 · 概念与场景",
+        title: "2. 《LUNA》初期概念设计与场景原画",
+        desc: "构建奇幻自然生态与多种族聚落建筑概念设定，涵盖森林溪流、荧光苔藓洞穴及荒漠风蚀地貌。",
+        bullets: [
+          "自然环境原画：冰川融水溪流沼泽、荧光苔藓洞穴、昼夜温差沙丘场景",
+          "精灵与守林人聚落：与自然融为一体的蘑菇屋建筑、高位观察哨树屋建筑",
+          "地下与荒漠聚落：暗黑精灵石骨建筑、洞穴旅人三角建筑、依风蚀柱而建的沙漠小屋"
+        ],
+        tags: ["场景原画", "建筑概念设定", "世界观视觉", "奇幻生态"],
+        localPath: "images/luna.jpg",
+        gradient: "linear-gradient(135deg, #422016 0%, #854d27 50%, #1f2937 100%)",
+        watermark: "LUNA"
+      },
+      {
+        id: "timedrawer",
+        category: "project",
+        categoryName: "项目作品 · 独立全案美术",
+        title: "3. 《时光抽屉》全美术与 UI 交互",
+        desc: "独立包揽游戏全部视觉美术、怀旧叙事场景绘制及全流程 UI 交互组件设计。",
+        bullets: [
+          "主界面视觉：女孩与时光抽屉主视觉插画及“继续游戏/设置/退出”手绘感按钮",
+          "怀旧叙事场景：黄昏教室、温馨卧室、零食售货机、木质抽屉柜全景绘制",
+          "核心交互玩法：旋转木马 4/9 拼图收集、童年辣条道具特写与组件状态拆分图"
+        ],
+        tags: ["全案美术", "UI交互设计", "怀旧插画", "独立游戏"],
+        localPath: "images/timedrawer.jpg",
+        gradient: "linear-gradient(135deg, #4a1d33 0%, #833857 55%, #d97757 100%)",
+        watermark: "时光抽屉"
+      },
+      {
+        id: "ava",
+        category: "original",
+        categoryName: "原画作品 · 角色设定",
+        title: "1. 《AVA》原创角色立绘与多套时装设定",
+        desc: "围绕原创角色 AVA 展开的多风格服饰造型探索，展现鲜明的性格反差与色彩搭配。",
+        bullets: [
+          "晚礼服造型：酒红抹胸珍珠点缀长裙搭配菱格长手套与盘发造型",
+          "冒险休闲造型：蓝紫挂脖背心、皮质护腕长靴搭配星星图案黑丝与灵动短发",
+          "复古学院造型：棕色娃娃领连衣裙、红色波点长飘带蝴蝶结与手提公文包"
+        ],
+        tags: ["角色原画", "服装设计", "人设探索", "日系厚涂/平涂"],
+        localPath: "images/ava.jpg",
+        gradient: "linear-gradient(135deg, #7c2d12 0%, #c2410c 50%, #431407 100%)",
+        watermark: "AVA"
+      },
+      {
+        id: "alice",
+        category: "original",
+        categoryName: "原画作品 · 角色三视图",
+        title: "2. 《爱丽丝》角色立绘与标准三视图",
+        desc: "童话主题角色设计，包含完整正/侧/背三视图拆分，可直接对接 3D 建模或衍生开发。",
+        bullets: [
+          "正面主立绘：金色卷发、蓝白格纹泡泡袖、围裙腰间悬挂复古大钥匙与超大背后蝴蝶结",
+          "非对称细节设计：单侧大腿袜箍与另一侧蓝白条纹长袜造型",
+          "标准工业规范：提供精准对齐的正面、侧面、背面角色三视图"
+        ],
+        tags: ["标准三视图", "角色设计", "洛丽塔服饰", "游戏原画"],
+        localPath: "images/alice.jpg",
+        gradient: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #172554 100%)",
+        watermark: "ALICE"
+      },
+      {
+        id: "sultan-zine",
+        category: "fanart",
+        categoryName: "同人制品 · 连载同人本",
+        title: "1. 《苏丹的游戏》同人本《一千零一夜》",
+        desc: "于 CPP 平台连载的同人志企划，采用强烈的黑金与赤红剪影构图，呈现浓郁异域史诗氛围。",
+        bullets: [
+          "金色穹顶宫殿建筑群与红底白线人物侧影跨页设计",
+          "巨手操控下的光影群像叙事插画，极具戏剧张力与宗教神秘感",
+          "包含完整刊物排版与连载视觉包装"
+        ],
+        tags: ["同人本连载", "异域风情", "叙事构图", "CPP连载"],
+        localPath: "images/sultan_book.jpg",
+        gradient: "linear-gradient(135deg, #7f1d1d 0%, #b45309 55%, #111827 100%)",
+        watermark: "1001 NIGHTS"
+      },
+      {
+        id: "sultan-illust",
+        category: "fanart",
+        categoryName: "同人制品 · 系列插画",
+        title: "2. 《苏丹的游戏》群像长卷与卡牌同人图",
+        desc: "涵盖极具装饰感的黑白红群像长卷、七联全彩光影角色绘以及四联暗黑描金塔罗风立绘。",
+        bullets: [
+          "红底黑白线稿群像：14位角色服饰纹样与动态神态精细刻画",
+          "全彩光影角色集：7幅高饱和度火焰、丛林、星夜与流光氛围角色特写",
+          "四联黑底亮线卡牌：红、橙、蓝、绿四色星芒华丽边框与人物剪影结合"
+        ],
+        tags: ["群像长卷", "卡牌设计", "精細线稿", "光影氛围"],
+        localPath: "images/sultan_art.jpg",
+        gradient: "linear-gradient(135deg, #991b1b 0%, #dc2626 45%, #09090b 100%)",
+        watermark: "SULTAN"
+      },
+      {
+        id: "comm-illust",
+        category: "commission",
+        categoryName: "商业与委托 · 插图系列",
+        title: "1. 商业与个人委托氛围插图集",
+        desc: "多题材高精度插画稿件，擅长利用极端的冷暖光影对比与粒子光效烘托故事高潮。",
+        bullets: [
+          "暗黑哥特风：猩红夜空下被荆棘铁栏环绕的玫瑰权杖与飞鸟",
+          "幻想唯美风：《BELONG TO》冰封雪山之巅展开冰晶双翼的幻想场景",
+          "高燃与叙事组图：赤金碎光爆发、云端飞鸽剪影、红蓝双生宿命对峙及日落金山群狼"
+        ],
+        tags: ["商业插图", "光影氛围", "场景叙事", "委托稿件"],
+        localPath: "images/comm_illust.jpg",
+        gradient: "linear-gradient(135deg, #1e40af 0%, #7e22ce 50%, #991b1b 100%)",
+        watermark: "ILLUSTRATION"
+      },
+      {
+        id: "book-cover",
+        category: "commission",
+        categoryName: "商业与委托 · 出版书封",
+        title: "2. 青春竞技主题商业书封绘制",
+        desc: "为体育竞技题材作品绘制的横版通页书封，捕捉羽毛球双打腾空扣杀的高燃瞬间。",
+        bullets: [
+          "高明度橙黄与赤红光效交织，配合漫天飞舞的几何光斑营造赛场沸腾感",
+          "精准刻画双人运动肌肉动态与球网空间透视，预留左上方书名排版呼吸感"
+        ],
+        tags: ["小说书封", "出版物插画", "动态捕捉", "热血竞技"],
+        localPath: "images/book_cover.jpg",
+        gradient: "linear-gradient(135deg, #ca8a04 0%, #ea580c 55%, #991b1b 100%)",
+        watermark: "BOOK COVER"
+      },
+      {
+        id: "ui-apps",
+        category: "ui",
+        categoryName: "UI 作品及其他 · 移动应用",
+        title: "1. 智能助听器 App &《灵植悦联》手账界面",
+        desc: "两套完整移动端 UI/UX 视觉设计，分别针对医疗健康硬件控制与Z世代情感陪伴手账场景。",
+        bullets: [
+          "智能助听器 App：包含3D耳机主界面、降噪调节、中医耳穴按摩（听宫穴定位）、听力健康与个人中心",
+          "《灵植悦联 / hana》App：清新森系视觉，涵盖日记手账贴纸排版、22°C温湿度生长环境监测、AI小灵陪伴对话与日历打卡"
+        ],
+        tags: ["移动端UI", "智能硬件App", "手账社区", "界面视觉"],
+        localPath: "images/ui_apps.jpg",
+        gradient: "linear-gradient(135deg, #166534 0%, #15803d 50%, #ca8a04 100%)",
+        watermark: "UI DESIGN"
+      },
+      {
+        id: "posters",
+        category: "ui",
+        categoryName: "UI 作品及其他 · 展板与海报",
+        title: "2. 《光屿 Lumen Blocks》展板与流光配饰海报",
+        desc: "结合工业产品结构展示、市场数据可视化与东方美学配饰宣传的综合平面设计。",
+        bullets: [
+          "《光屿》产品展板：包含用户定位、数据图表分析、低碳环保理念及模块化组件自由拼搭结构爆炸图",
+          "“白山黑水”云流光系列配饰：融合自然山水意境的品牌视觉海报设计"
+        ],
+        tags: ["产品展板", "信息可视化", "品牌海报", "平面设计"],
+        localPath: "images/posters.jpg",
+        gradient: "linear-gradient(135deg, #065f46 0%, #047857 50%, #111827 100%)",
+        watermark: "POSTER"
+      }
+    ];
+
+    // 存储用户通过浏览器临时上传的图片 Base64
+    const customImages = {};
+    let currentEditingId = null;
+
+    const gridEl = document.getElementById("portfolioGrid");
+    const fileInput = document.getElementById("imageInput");
+
+    function renderGallery(filter = "all") {
+      gridEl.innerHTML = "";
+      const list = filter === "all"
+        ? portfolioItems
+        : portfolioItems.filter(item => item.category === filter);
+
+      list.forEach(item => {
+        const hasCustomImg = customImages[item.id];
+        const card = document.createElement("article");
+        card.className = "card";
+
+        card.innerHTML = `
+          <div class="card-cover" onclick="openModal('${item.id}')">
+            <button class="replace-img-btn" onclick="triggerReplace(event, '${item.id}')">🖼️ 替换本地图片</button>
+            ${
+              hasCustomImg
+                ? `<img src="${hasCustomImg}" alt="${item.title}">`
+                : `<div class="art-placeholder" style="background: ${item.gradient}">
+                     <span class="art-preview-label">点击查看项目详情 · 右上角可换图</span>
+                     <div class="art-watermark">${item.watermark}</div>
+                   </div>`
+            }
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="card-meta">
+                <span class="category-badge">${item.categoryName}</span>
+                <span class="file-hint">${item.localPath}</span>
+              </div>
+              <h3 class="card-title">${item.title}</h3>
+              <p class="card-desc">${item.desc}</p>
+            </div>
+            <div class="tags">
+              ${item.tags.map(t => `<span class="tag"># ${t}</span>`).join("")}
+            </div>
+          </div>
+        `;
+        gridEl.appendChild(card);
+      });
+    }
+
+    // 分类标签切换
+    document.getElementById("filterNav").addEventListener("click", e => {
+      if (!e.target.classList.contains("filter-tab")) return;
+      document.querySelectorAll(".filter-tab").forEach(b => b.classList.remove("active"));
+      e.target.classList.add("active");
+      renderGallery(e.target.dataset.filter);
+    });
+
+    // 本地选图实时替换预览
+    function triggerReplace(e, id) {
+      e.stopPropagation();
+      currentEditingId = id;
+      fileInput.click();
+    }
+
+    fileInput.addEventListener("change", e => {
+      const file = e.target.files[0];
+      if (!file || !currentEditingId) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        customImages[currentEditingId] = ev.target.result;
+        const activeFilter = document.querySelector(".filter-tab.active").dataset.filter;
+        renderGallery(activeFilter);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // 弹窗逻辑
+    function openModal(id) {
+      const item = portfolioItems.find(x => x.id === id);
+      if (!item) return;
+      document.getElementById("modalCategory").textContent = item.categoryName;
+      document.getElementById("modalTitle").textContent = item.title;
+      document.getElementById("modalDesc").textContent = item.desc;
+      document.getElementById("modalBullets").innerHTML = item.bullets.map(b => `<li>${b}</li>`).join("");
+
+      const imgBox = document.getElementById("modalImageContainer");
+      if (customImages[item.id]) {
+        imgBox.innerHTML = `<img src="${customImages[item.id]}" alt="${item.title}">`;
+      } else {
+        imgBox.innerHTML = `
+          <div class="art-placeholder" style="background: ${item.gradient}; min-height: 320px;">
+            <span class="art-preview-label">尚未载入本地原图（默认文件名为 ${item.localPath}）</span>
+            <div class="art-watermark" style="font-size:64px;">${item.watermark}</div>
+          </div>`;
+      }
+      document.getElementById("projectModal").classList.add("open");
+    }
+
+    function closeModal() {
+      document.getElementById("projectModal").classList.remove("open");
+    }
+
+    // 初始渲染
+    renderGallery();
+  </script>
 </body>
 </html>
